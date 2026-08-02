@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lost Explorer Expedition</title>
+    <style>
+        :root {
+            --bg-color: #0f1c12;
+            --card-bg: #172a1d;
+            --text-color: #e2f0d9;
+            --text-muted: #a3c2a6;
+            --primary: #4e8c5e;
+            --primary-hover: #62a373;
+            --accent: #d9a05b;
+            --danger: #b84d4d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #game-container {
+            max-width: 680px;
+            width: 100%;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            border: 1px solid #233f2c;
+        }
+
+        header {
+            border-bottom: 2px solid #233f2c;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        #stats-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background: rgba(0,0,0,0.2);
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-item span {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        #story-text {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            min-height: 120px;
+        }
+
+        #story-text p {
+            margin-bottom: 15px;
+        }
+
+        #story-text em {
+            color: var(--accent);
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        .penalty-text {
+            color: var(--danger);
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #choices-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .choice-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            width: 100%;
+        }
+
+        .choice-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #skills-panel {
+            border-top: 1px solid #233f2c;
+            padding-top: 20px;
+        }
+
+        .skills-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .badges {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .badge {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid #233f2c;
+            padding: 8px 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            color: rgba(163, 194, 166, 0.25);
+        }
+
+        .badge.unlocked {
+            background: #233f2c;
+            border-color: var(--accent);
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        @media(max-width: 480px) {
+            #game-container { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+            .badges { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <header>
+        <h1>The Search for the Lost Expedition</h1>
+        <div class="subtitle">Maritime Museum Field Research</div>
+    </header>
+
+    <div id="stats-panel">
+        <div class="stat-item">Time Elapsed: <span id="time-display">0 hours</span></div>
+        <div class="stat-item">Supplies Level: <span id="supplies-display">100%</span></div>
+    </div>
+
+    <div id="story-text">
+        <p>Your Maritime Museum research team steps off the longboat onto the humid shore of the uncharted tropical island. Armed with historical journals, your goal is to find the final campsite of an 18th-century expedition.</p>
+        <p>Leading your group is the veteran chief researcher, <em>Dr. Wallace</em>. Before stepping past the treeline, he turns to everyone and shares his golden rule: <strong>'Every step in this wilderness must answer one core question: What would a careful explorer do?'</strong></p>
+    </div>
+
+    <div id="choices-container">
+        <button type="button" class="choice-btn" id="fixed-action-btn">Begin the expedition into the jungle</button>
+    </div>
+
+    <div id="skills-panel">
+        <div class="skills-title">Unlocked Explorer Pillars</div>
+        <div class="badges">
+            <div id="badge-observe" class="badge">🔍 Observe</div>
+            <div id="badge-think" class="badge">🧭 Think</div>
+            <div id="badge-wait" class="badge">⏳ Wait</div>
+            <div id="badge-together" class="badge">🤝 Work Together</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function() {
+        let timeElapsed = 0;
+        let supplies = 100;
+
+        const skillsUnlocked = {
+            observe: false,
+            think: false,
+            wait: false,
+            together: false
+        };
+
+        const storyData = {
+            trail: {
+                text: "<p>You plunge deep into the emerald jungle. After an hour of steady marching, the dense canopy blocks out most of the sun. Suddenly, the clear path hits a wall of thick brush.</p><p><strong>The trail simply vanishes.</strong> There is no obvious direction forward, and your crew looks around anxiously. Dr. Wallace pauses, looking down. <em>'The jungle rarely hides everything,'</em> he murmurs.</p>",
+                choices: [
+                    { text: "Push straight ahead through the thick brush", nextStep: "trail_wrong_push" },
+                    { text: "Look closely for signs of disturbed ground", nextStep: "trail_correct" },
+                    { text: "Spread out and follow broken branches", nextStep: "trail_wrong_branches" }
+                ]
+            },
+            trail_wrong_push: {
+                text: "<p>You attempt to brute-force your way straight through the dense foliage. The vines are heavily tangled, trapping your legs and scratching your skin.</p><p class='penalty-text'>⚠️ Penalty: You get stuck and waste precious time hacking yourself free. (+2 Hours)</p><p>Eventually, Dr. Wallace pulls you back toward the spot where the path went cold. Let's look closer.</p>",
+                choices: [
+                    { text: "Look closely for signs of disturbed ground", nextStep: "trail_correct" }
+                ],
+                onLoad: () => { addPenalty(2, 0); }
+            },
+            trail_wrong_branches: {
+                text: "<p>The team spreads out into the brush chasing what look like broken branches. However, these are just natural debris from past storms. Two researchers trip down a hidden drop-off, dropping a crate.</p><p class='penalty-text'>⚠️ Penalty: Your team scatters, forcing a stressful regroup. (+1 Hour, -10% Supplies)</p><p>Dr. Wallace gathers everyone back to the center line to rethink the strategy.</p>",
+                choices: [
+                    { text: "Look closely for signs of disturbed ground", nextStep: "trail_correct" }
+                ],
+                onLoad: () => { addPenalty(1, 10); }
+            },
+            trail_correct: {
+                text: "<p>You crouch down alongside Dr. Wallace, clearing away fallen leaves. Beneath the fresh layer, you uncover faint, compacted soil compressions and a single rusted metal uniform button half-buried in the mud.</p><p>Your team successfully uncovers the true historical route. You have demonstrated the pillar of <strong>🔍 Observe</strong>.</p>",
+                choices: [
+                    { text: "Advance deeper along the recovered path", nextStep: "tree" }
+                ],
+                onLoad: () => { unlockSkill('observe'); }
+            },
+            tree: {
+                text: "<p>Moving forward, the path becomes better defined until you hit a massive roadblock. An ancient, gigantic ironwood tree has fallen, completely bridging the gap between two steep slopes.</p><p><strong>A massive tree blocks the path.</strong> The trunk is nearly ten feet high, and the space beneath it is dark, cavernous, and covered in rotting leaves.</p>",
+                choices: [
+                    { text: "Climb directly over the slippery trunk", nextStep: "tree_wrong_climb" },
+                    { text: "Crawl through the dark space underneath", nextStep: "tree_wrong_under" },
+                    { text: "Take the slow route and walk safely around the root system", nextStep: "tree_correct" }
+                ]
+            },
+            tree_wrong_climb: {
+                text: "<p>You attempt to climb up the slick, moss-covered wood. Halfway up, your footing gives way, and you slide roughly down the trunk, scraping your hands and knees.</p><p class='penalty-text'>⚠️ Penalty: Minor injuries slow down the pace. (+2 Hours)</p><p>Dr. Wallace helps you up and shakes his head, pointing a safer way around.</p>",
+                choices: [
+                    { text: "Walk safely all the way around the root system", nextStep: "tree_correct" }
+                ],
+                onLoad: () => { addPenalty(2, 0); }
+            },
+            tree_wrong_under: {
+                text: "<p>You drop to your knees to crawl through the dark gap under the trunk. As you disturb the decaying foliage, a nest of highly aggressive spiders scatters. A crew member drops their pack in panic.</p><p class='penalty-text'>⚠️ Penalty: Supplies are abandoned in the scramble to escape. (-15% Supplies)</p><p>Dr. Wallace quickly pulls the team back from the hollow gap.</p>",
+                choices: [
+                    { text: "Walk safely all the way around the root system", nextStep: "tree_correct" }
+                ],
+                onLoad: () => { addPenalty(0, 15); }
+            },
+            tree_correct: {
+                text: "<p>Recognizing the hidden dangers of the trunk's underside and top, you guide the group on a wide, cautious arc around the giant root flare. The detour is long, but completely safe.</p><p>Dr. Wallace smiles. 'Impatience is an explorer's worst enemy.' You have demonstrated the pillar of <strong>🧭 Think</strong>.</p>",
+                choices: [
+                    { text: "Continue the march forward", nextStep: "creek" }
+                ],
+                onLoad: () => { unlockSkill('think'); }
+            },
+            creek: {
+                text: "<p>The sound of rushing water echoes through the jungle. The path ends abruptly at the edge of a wide, fast-flowing mountain creek fed by recent tropical rainfall.</p><p>The explorers reach a fast creek. The water is murky, swirling aggressively over hidden drops. A line of slick, wet stepping stones leads across, but they look dangerously unstable.</p>",
+                choices: [
+                    { text: "Wade directly through the rushing water", nextStep: "creek_wrong_wade" },
+                    { text: "Carefully hop across the slippery stepping stones", nextStep: "creek_wrong_rocks" },
+                    { text: "Follow the bank upstream to search for a natural crossing", nextStep: "creek_correct" }
+                ]
+            },
+            creek_wrong_wade: {
+                text: "<p>You step directly into the fast-flowing stream. The current is instantly stronger than it looks, sweeping feet out from under a team member. You have to use ropes to haul them back to the bank, soaking your scientific gear.</p><p class='penalty-text'>⚠️ Penalty: Equipment is waterlogged. (+1 Hour, -10% Supplies)</p><p>You catch your breath on the bank and reassess your options.</p>",
+                choices: [
+                    { text: "Follow the bank upstream to search for a natural crossing", nextStep: "creek_correct" }
+                ],
+                onLoad: () => { addPenalty(1, 10); }
+            },
+            creek_wrong_rocks: {
+                text: "<p>You attempt to balance across the wet stones. Halfway across, an unstable rock shifts beneath your weight. You slip heavily, jamming your ankle into a gap between the boulders.</p><p class='penalty-text'>⚠️ Penalty: An ankle injury requires a pause to bandage. (+3 Hours)</p><p>Hobbling back to the starting bank, you realize hopping across is too reckless.</p>",
+                choices: [
+                    { text: "Follow the bank upstream to search for a natural crossing", nextStep: "creek_correct" }
+                ],
+                onLoad: () => { addPenalty(3, 0); }
+            },
+            creek_correct: {
+                text: "<p>You choose patience over speed, leading the team a few hundred yards upstream. There, you discover an old, sturdy fallen log forming a broad, natural bridge across a calm, shallow stretch of water.</p><p>The entire museum party crosses safely without a drop of water spilled. You have demonstrated the pillar of <strong>⏳ Wait</strong>.</p>",
+                choices: [
+                    { text: "Keep moving deeper into the interior", nextStep: "warning" }
+                ],
+                onLoad: () => { unlockSkill('wait'); }
+            },
+            warning: {
+                text: "<p>You push into an area where the vegetation changes into dense bamboo thickets. Suddenly, the constant background drone of chirping birds and buzzing cicadas completely stops.</p><p>The forest becomes perfectly silent. Dr. Wallace immediately raises his hand, holding his breath, whispering: <em>'Listen...'</em></p>",
+                choices: [
+                    { text: "Ignore the silence and continue walking forward", nextStep: "warning_wrong_continue" },
+                    { text: "Shout loudly to alert the other members of your crew", nextStep: "warning_wrong_call" },
+                    { text: "Stop moving immediately and stay perfectly still", nextStep: "warning_correct" }
+                ]
+            },
+            warning_wrong_continue: {
+                text: "<p>You keep walking forward blindly. Your sudden footsteps startle a massive wild boar hiding in the bamboo. It rears up defensively and charges, forcing your team to bolt backwards into the jungle to evade its tusks.</p><p class='penalty-text'>⚠️ Penalty: The retreat disorients the team. (+2 Hours)</p><p>Once the boar storms off, Dr. Wallace brings everyone back to a halt to observe safely.</p>",
+                choices: [
+                    { text: "Stop moving immediately and stay perfectly still", nextStep: "warning_correct" }
+                ],
+                onLoad: () => { addPenalty(2, 0); }
+            },
+            warning_wrong_call: {
+                text: "<p>You yell out to the team behind you. The loud noise instantly spooks a wild boar nesting nearby. Terrified, it crashes directly through your team's line, smashing an equipment case before disappearing into the brush.</p><p class='penalty-text'>⚠️ Penalty: Crushed tools cost precious resources. (-15% Supplies)</p><p>Quiet settles back over the jungle as Dr. Wallace signals for complete stillness.</p>",
+                choices: [
+                    { text: "Stop moving immediately and stay perfectly still", nextStep: "warning_correct" }
+                ],
+                onLoad: () => { addPenalty(0, 15); }
+            },
+            warning_correct: {
+                text: "<p>Your team freezes, blending seamlessly into the quiet brush. A moment later, a massive wild boar with sharp tusks steps out onto the path ahead. Because you are perfectly still, it simply sniffs the air, turns around, and peacefully wanders deep into the thicket.</p><p>No injuries. No panic. Just safe, professional observation of the environment.</p>",
+                choices: [
+                    { text: "Resume your journey along the path", nextStep: "vines" }
+                ]
+            },
+            vines: {
+                text: "<p>The trail takes you down into a narrow valley where the path is entirely choked out by dense curtains of wicked thorn vines. Sharp, black barbs threaten to shred any clothing or skin that touches them.</p><p>An eager young researcher draws a machete, suggesting you start hacking your way through. But Dr. Wallace stops them, pointing to the base of an old, weathered stone wall nearby. He notices vines already cut, long ago.</p>",
+                choices: [
+                    { text: "Hack a brand new path through the fresh thorn vines", nextStep: "vines_wrong" },
+                    { text: "Trust the old expedition signs and look where they bypassed the wall", nextStep: "vines_correct" }
+                ]
+            },
+            vines_wrong: {
+                text: "<p>You try to hack through the dense thorns. The swinging blades cause the springy vines to lash back, slicing your clothing and puncturing skin, forcing you to use medical gear from your packs.</p><p class='penalty-text'>⚠️ Penalty: First-aid stops drain your team supplies. (-15% Supplies)</p><p>Nursing your cuts, you decide to follow Dr. Wallace's original observation instead.</p>",
+                choices: [
+                    { text: "Trust the old expedition signs and look where they bypassed the wall", nextStep: "vines_correct" }
+                ],
+                onLoad: () => { addPenalty(0, 15); }
+            },
+            vines_correct: {
+                text: "<p>You follow the ancient, faint machete scars on the old stone wall. Hidden behind a screen of harmless ivy, you discover a clear, dry corridor that completely bypasses the patch of thorns.</p><p>You are successfully utilizing the combined knowledge of those who came before you. You have demonstrated the pillar of <strong>🤝 Work Together</strong>.</p>",
+                choices: [
+                    { text: "Follow the corridor to the end of the valley", nextStep: "cliff" }
+                ],
+                onLoad: () => { unlockSkill('together'); }
+            },
+            cliff: {
+                text: "<p>The corridor opens up into a dramatic, enclosed canyon. Ahead of you stands an imposing, sheer rock cliff face rising hundreds of feet into the sky. The path has hit a total dead end.</p><p>The trail seems to end completely. Several researchers sigh, believing you are trapped and must turn back. But Dr. Wallace calmly steps up to the stone wall, scanning the rock face. 'Look closer,' he commands.</p>",
+                choices: [
+                    { text: "Search the base of the rock for ancient stacked stones and worn handholds", nextStep: "cliff_correct" },
+                    { text: "Try to manually scale the blank, smooth sections of the cliff face", nextStep: "cliff_wrong" }
+                ]
+            },
+            cliff_wrong: {
+                text: "<p>You attempt to climb up a smooth section of the cliff without assessing it. Lacking proper footings, you slip after only ten feet, tumbling back down onto the rocky floor and bruising your shoulder.</p><p class='penalty-text'>⚠️ Penalty: A rough fall slows down the group's ascent. (+2 Hours)</p><p>You rub your bruised arm and join Dr. Wallace as he examines a different section of the wall.</p>",
+                choices: [
+                    { text: "Search the base of the rock for ancient stacked stones and worn handholds", nextStep: "cliff_correct" }
+                ],
+                onLoad: () => { addPenalty(2, 0); }
+            },
+            cliff_correct: {
+                text: "<p>By carefully searching, you spot an intentional arrangement of stacked stones marking a hidden cleft in the rock. Tucked inside this natural fold is a series of old, deeply worn handholds chiseled right into the stone centuries ago.</p><p>One by one, your expedition team safely climbs up the hidden, protected pathway to the top of the plateau.</p>",
+                choices: [
+                    { text: "Step up onto the high plateau", nextStep: "cave" }
+                ]
+            },
+            cave: {
+                text: "<p>As you scale the final ridge of the plateau, the dense jungle gives way. Standing majestic before your expedition team is an enormous, ancient cave entrance carved directly into the mountain core.</p><p>Faint carvings matching your museum's historical maps line the stone archway. Dr. Wallace removes his sun hat, looking up in quiet reverence. 'No accident brought us here,' he whispers.</p><p>You have found the ultimate goal of your expedition through careful observation, patience, and logic.</p>",
+                choices: [
+                    { text: "View Final Expedition Report", nextStep: "victory" }
+                ]
+            },
+            victory: {
+                text: "<p><strong>Expedition Successful!</strong></p><p>You have navigated the tropical island jungle trail and reached the lost historic site by learning to think exactly like a true master explorer.</p><div id='final-rating'></div>",
+                choices: [
+                    { text: "Restart Expedition", nextStep: "restart" }
+                ],
+                onLoad: () => { displayFinalRating(); }
+            }
+        };
+
+        function addPenalty(hours, supplyLoss) {
+            timeElapsed += hours;
+            supplies -= supplyLoss;
+            if (supplies < 0) supplies = 0;
+            updateStats();
+        }
+
+        function unlockSkill(skillId) {
+            skillsUnlocked[skillId] = true;
+            const badge = document.getElementById(`badge-${skillId}`);
+            if (badge) badge.classList.add('unlocked');
+        }
+
+        function resetSkills() {
+            for (let key in skillsUnlocked) {
+                skillsUnlocked[key] = false;
+                const badge = document.getElementById(`badge-${key}`);
+                if (badge) badge.classList.remove('unlocked');
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('time-display').textContent = `${timeElapsed} hours`;
+            document.getElementById('supplies-display').textContent = `${supplies}%`;
+        }
+
+        function displayFinalRating() {
+            let ratingHTML = `<p style='margin-top: 15px;'><strong>Total Time Spent:</strong> ${timeElapsed} hours</p>`;
+            ratingHTML += `<p><strong>Remaining Supplies:</strong> ${supplies}%</p><br>`;
+
+            if (timeElapsed === 0 && supplies === 100) {
+                ratingHTML += `<p style='color: var(--accent); font-weight: bold;'>🏆 Rank: Master Explorer (Flawless Run! Dr. Wallace is incredibly proud.)</p>`;
+            } else if (timeElapsed <= 4 && supplies >= 70) {
+                ratingHTML += `<p style='color: var(--text-color); font-weight: bold;'>🥈 Rank: Capable Scholar (A highly efficient and safe museum expedition.)</p>`;
+            } else {
+                ratingHTML += `<p style='color: var(--text-muted); font-weight: bold;'>🥉 Rank: Reckless Adventurer (You found the cave, but the journey was messy. Remember to be more patient next time!)</p>`;
+            }
+
+            const ratingEl = document.getElementById('final-rating');
+            if (ratingEl) ratingEl.innerHTML = ratingHTML;
+        }
+
+        function renderStep(stepKey) {
+            if (stepKey === "restart") {
+                timeElapsed = 0;
+                supplies = 100;
+                resetSkills();
+                updateStats();
+                renderStep("trail");
+                return;
+            }
+
+            const step = storyData[stepKey];
+            document.getElementById('story-text').innerHTML = step.text;
+
+            const choicesContainer = document.getElementById('choices-container');
+            choicesContainer.innerHTML = '';
+
+            step.choices.forEach(choice => {
+                const button = document.createElement('button');
+                button.className = 'choice-btn';
+                button.textContent = choice.text;
+                button.addEventListener('click', function() {
+                    renderStep(choice.nextStep);
+                });
+                choicesContainer.appendChild(button);
+            });
+
+            if (step.onLoad) {
+                step.onLoad();
+            }
+        }
+
+        // Initialize display stats instantly on full window loading clearance
+        updateStats();
+
+        // Safe direct click mapping to structural engine route
+        document.getElementById('fixed-action-btn').addEventListener('click', function() {
+            renderStep('trail');
+        });
+    };
+</script>
+
+</body>
+</html>
