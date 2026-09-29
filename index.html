@@ -189,7 +189,7 @@
 
     <div id="story-text">
         <p>Your Maritime Museum research team steps off the longboat onto the humid shore of the uncharted tropical island. Armed with historical journals, your goal is to find the final campsite of an 18th-century expedition.</p>
-        <p>Leading your group is the veteran chief researcher, <em>Dr. Wallace</em>. Before stepping past the treeline, he turns to everyone and shares his golden rule: <strong>'Every step in this wilderness must answer one core question: What would a careful explorer do?'</strong></p>
+        <p>Leading your group is the veteran chief researcher, <em>Dr. Wallace</em>. Before stepping past the treeline, she turns to everyone and shares the golden rule: <strong>'Every step in this wilderness must answer one core question: What would a careful explorer do?'</strong></p>
     </div>
 
     <div id="choices-container">
@@ -221,7 +221,7 @@
 
         const storyData = {
             trail: {
-                text: "<p>You plunge deep into the emerald jungle. After an hour of steady marching, the dense canopy blocks out most of the sun. Suddenly, the clear path hits a wall of thick brush.</p><p><strong>The trail simply vanishes.</strong> There is no obvious direction forward, and your crew looks around anxiously. Dr. Wallace pauses, looking down. <em>'The jungle rarely hides everything,'</em> he murmurs.</p>",
+                text: "<p>You plunge deep into the emerald jungle. After an hour of steady marching, the dense canopy blocks out most of the sun. Suddenly, the clear path hits a wall of thick brush.</p><p><strong>The trail simply vanishes.</strong> There is no obvious direction forward, and your crew looks around anxiously. Dr. Wallace pauses, looking down. <em>'The jungle rarely hides everything,'</em> she murmurs.</p>",
                 choices: [
                     { text: "Push straight ahead through the thick brush", nextStep: "trail_wrong_push" },
                     { text: "Look closely for signs of disturbed ground", nextStep: "trail_correct" },
@@ -258,7 +258,7 @@
                 ]
             },
             tree_wrong_climb: {
-                text: "<p>You attempt to climb up the slick, moss-covered wood. Halfway up, your footing gives way, and you slide roughly down the trunk, scraping your hands and knees.</p><p class='penalty-text'>⚠️ Penalty: Minor injuries slow down the pace. (+2 Hours)</p><p>Dr. Wallace helps you up and shakes his head, pointing a safer way around.</p>",
+                text: "<p>You attempt to climb up the slick, moss-covered wood. Halfway up, your footing gives way, and you slide roughly down the trunk, scraping your hands and knees.</p><p class='penalty-text'>⚠️ Penalty: Minor injuries slow down the pace. (+2 Hours)</p><p>Dr. Wallace helps you up and shakes her head, pointing to a safer way around.</p>",
                 choices: [
                     { text: "Walk safely all the way around the root system", nextStep: "tree_correct" }
                 ],
@@ -308,7 +308,7 @@
                 onLoad: () => { unlockSkill('wait'); }
             },
             warning: {
-                text: "<p>You push into an area where the vegetation changes into dense bamboo thickets. Suddenly, the constant background drone of chirping birds and buzzing cicadas completely stops.</p><p>The forest becomes perfectly silent. Dr. Wallace immediately raises his hand, holding his breath, whispering: <em>'Listen...'</em></p>",
+                text: "<p>You push into an area where the vegetation changes into dense bamboo thickets. Suddenly, the constant background drone of chirping birds and buzzing cicadas completely stops.</p><p>The forest becomes perfectly silent. Dr. Wallace immediately raises her hand, holding her breath, whispering: <em>'Listen...'</em></p>",
                 choices: [
                     { text: "Ignore the silence and continue walking forward", nextStep: "warning_wrong_continue" },
                     { text: "Shout loudly to alert the other members of your crew", nextStep: "warning_wrong_call" },
@@ -336,7 +336,7 @@
                 ]
             },
             vines: {
-                text: "<p>The trail takes you down into a narrow valley where the path is entirely choked out by dense curtains of wicked thorn vines. Sharp, black barbs threaten to shred any clothing or skin that touches them.</p><p>An eager young researcher draws a machete, suggesting you start hacking your way through. But Dr. Wallace stops them, pointing to the base of an old, weathered stone wall nearby. He notices vines already cut, long ago.</p>",
+                text: "<p>The trail takes you down into a narrow valley where the path is entirely choked out by dense curtains of wicked thorn vines. Sharp, black barbs threaten to shred any clothing or skin that touches them.</p><p>An eager young researcher draws a machete, suggesting you start hacking your way through. But Dr. Wallace stops, pointing to the base of an old, weathered stone wall nearby. She notices vines already cut, long ago.</p>",
                 choices: [
                     { text: "Hack a brand new path through the fresh thorn vines", nextStep: "vines_wrong" },
                     { text: "Trust the old expedition signs and look where they bypassed the wall", nextStep: "vines_correct" }
@@ -357,14 +357,14 @@
                 onLoad: () => { unlockSkill('together'); }
             },
             cliff: {
-                text: "<p>The corridor opens up into a dramatic, enclosed canyon. Ahead of you stands an imposing, sheer rock cliff face rising hundreds of feet into the sky. The path has hit a total dead end.</p><p>The trail seems to end completely. Several researchers sigh, believing you are trapped and must turn back. But Dr. Wallace calmly steps up to the stone wall, scanning the rock face. 'Look closer,' he commands.</p>",
+                text: "<p>The corridor opens up into a dramatic, enclosed canyon. Ahead of you stands an imposing, sheer rock cliff face rising hundreds of feet into the sky. The path has hit a total dead end.</p><p>The trail seems to end completely. Several researchers sigh, believing you are trapped and must turn back. But Dr. Wallace calmly steps up to the stone wall, scanning the rock face. 'Look closer,' she commands.</p>",
                 choices: [
                     { text: "Search the base of the rock for ancient stacked stones and worn handholds", nextStep: "cliff_correct" },
                     { text: "Try to manually scale the blank, smooth sections of the cliff face", nextStep: "cliff_wrong" }
                 ]
             },
             cliff_wrong: {
-                text: "<p>You attempt to climb up a smooth section of the cliff without assessing it. Lacking proper footings, you slip after only ten feet, tumbling back down onto the rocky floor and bruising your shoulder.</p><p class='penalty-text'>⚠️ Penalty: A rough fall slows down the group's ascent. (+2 Hours)</p><p>You rub your bruised arm and join Dr. Wallace as he examines a different section of the wall.</p>",
+                text: "<p>You attempt to climb up a smooth section of the cliff without assessing it. Lacking proper footings, you slip after only ten feet, tumbling back down onto the rocky floor and bruising your shoulder.</p><p class='penalty-text'>⚠️ Penalty: A rough fall slows down the group's ascent. (+2 Hours)</p><p>You rub your bruised arm and join Dr. Wallace as she examines a different section of the wall.</p>",
                 choices: [
                     { text: "Search the base of the rock for ancient stacked stones and worn handholds", nextStep: "cliff_correct" }
                 ],
@@ -377,7 +377,7 @@
                 ]
             },
             cave: {
-                text: "<p>As you scale the final ridge of the plateau, the dense jungle gives way. Standing majestic before your expedition team is an enormous, ancient cave entrance carved directly into the mountain core.</p><p>Faint carvings matching your museum's historical maps line the stone archway. Dr. Wallace removes his sun hat, looking up in quiet reverence. 'No accident brought us here,' he whispers.</p><p>You have found the ultimate goal of your expedition through careful observation, patience, and logic.</p>",
+                text: "<p>As you scale the final ridge of the plateau, the dense jungle gives way. Standing majestic before your expedition team is an enormous, ancient cave entrance carved directly into the mountain core.</p><p>Faint carvings matching your museum's historical maps line the stone archway. Dr. Wallace removes her sun hat, looking up in quiet reverence. 'No accident brought us here,' she whispers.</p><p>You have found the ultimate goal of your expedition through careful observation, patience, and logic.</p>",
                 choices: [
                     { text: "View Final Expedition Report", nextStep: "victory" }
                 ]
